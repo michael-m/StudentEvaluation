@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+ 
+<struts>
+    <constant name="struts.enable.DynamicMethodInvocation"
+        value="false" />
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.custom.i18n.resources"
+        value="loginresources" />
+ 
+    <package name="default" extends="struts-default" namespace="/">
+<!--        <interceptors>
+                <interceptor name="hibernateSession"
+                             class="org.robbins.flashcards.presentation.HibernateSessionInterceptor"/>
+                <interceptor name="loginInterceptor"
+                             class="it.unitn.sisl.studenteval.LoginInterceptor"/>
+                   <interceptor-stack name="defaultStackWithStore">
+                      <interceptor-ref name="hibernateSession"/>
+                       <interceptor-ref name="loginInterceptor"/>
+                        <interceptor-ref name="store">
+                            <param name="operationMode">STORE</param>
+                        </interceptor-ref>
+                        <interceptor-ref name="defaultStack" />
+                    </interceptor-stack>
+                   <interceptor-stack name="defaultStackWithRetrieve">
+                       <interceptor-ref name="hibernateSession"/>
+                       <interceptor-ref name="loginInterceptor"/>
+                       <interceptor-ref name="store">
+                            <param name="operationMode">RETRIEVE</param>
+                       </interceptor-ref>
+                       <interceptor-ref name="defaultStack" />
+                   </interceptor-stack>
+        </interceptors>
+        <default-interceptor-ref name="defaultStackWithRetrieve"/>
+-->
+        <action name="doOpenIdAuth" class="it.unitn.sisl.studenteval.OpenIdAuthAction">
+            <result name="ERROR">error.jsp</result>
+            <result name="SUCCESS">success.jsp</result>
+        </action> 
+        <action name="getAuthenticatedUser"
+                class="it.unitn.sisl.studenteval.OpenIdAuthAction"
+                method="verifyResponse">
+            <result name="ERROR">error.jsp</result>
+            <result name="SUCCESS">success.jsp</result>
+        </action> 
+        <action name="doLogout"
+                class="it.unitn.sisl.studenteval.OpenIdSignOutAction">
+            <result name="ERROR">error_signout.jsp</result>
+            <result name="SUCCESS">studenteval.jsp</result>
+        </action> 
+    </package>
+</struts>
